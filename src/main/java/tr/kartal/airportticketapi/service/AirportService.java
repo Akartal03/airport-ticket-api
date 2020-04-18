@@ -2,11 +2,10 @@ package tr.kartal.airportticketapi.service;
 
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import tr.kartal.airportticketapi.model.Airport;
 import tr.kartal.airportticketapi.repository.AirportRepository;
-import tr.kartal.airportticketapi.repository.DaoUtils;
-import tr.kartal.airportticketapi.utils.SearchCriteria;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,9 +16,6 @@ public class AirportService {
 
     @Autowired
     private AirportRepository airportRepository;
-
-    @Autowired
-    private DaoUtils daoUtils;
 
     public List<Airport> getAirports() {
         return airportRepository.findAll();
@@ -45,8 +41,8 @@ public class AirportService {
         return airport.orElse(null);
     }
 
-    public List<Airport> searchAirport(List<SearchCriteria> params){
-        return daoUtils.searchAirport( params);
+    public List<Airport> findAll(Specification<Airport> spec) {
+        return airportRepository.findAll(spec);
     }
 }
 

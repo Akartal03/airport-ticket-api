@@ -14,11 +14,9 @@ public class Airport implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @NotNull
     @Column(name = "ID")
-    @SequenceGenerator(name = "airport_id_seq", sequenceName = "airport_id_seq", allocationSize = 1)
+    @SequenceGenerator(name = "airport_id_seq", sequenceName = "airport_id_seq",initialValue = 11, allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "airport_id_seq")
-    @Basic(optional = false)
     private Integer id;
 
     @NotNull
@@ -33,6 +31,6 @@ public class Airport implements Serializable {
 
     @Override
     public String toString(){
-        return iataCode + ", " + name + ", "+ countryIsoCode;
+        return "Airport: [" +iataCode + ", " + name + ", "+ countryIsoCode + "]";
     }
 }

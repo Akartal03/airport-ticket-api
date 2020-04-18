@@ -5,31 +5,38 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.Set;
 
 @Entity
 @Table(name = "FLIGHT")
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
 public class Flight implements Serializable {
 
     @Id
-    @NotNull
     @Column(name = "ID")
-    @SequenceGenerator(name = "flight_id_seq", sequenceName = "flight_id_seq", allocationSize = 1)
+    @SequenceGenerator(name = "flight_id_seq", sequenceName = "flight_id_seq",initialValue = 11, allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "flight_id_seq")
-    @Basic(optional = false)
-    private Long id;
+    private Integer id;
 
-    @Column(name = "DEPARTURE")
-    private String departure;
+    @Column(name = "FLIGHTNUMBER", unique = true)
+    private String flightNumber;
 
-    @Column(name = "ARRIVAL")
-    private String arrival;
+    @Column(name = "QUOTA")
+    private Integer quota;
+
+    @Column(name = "TICKETPRICE")
+    private BigDecimal ticketPrice;
+
+    @Column(name = "NUMBEROFSOLDTICKETS")
+    private Integer numberOfSoldTickets = 0;
+
+    @JoinColumn(name = "ROUTE_ID", referencedColumnName = "ID")
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Route route;
 
     @Column(name = "DEPARTUREDATE")
     private LocalDateTime departureDate;
@@ -37,7 +44,19 @@ public class Flight implements Serializable {
     @Column(name = "ARRIVALDATE")
     private LocalDateTime arrivalDate;
 
-    @ManyToMany(mappedBy = "flights", fetch = FetchType.LAZY)
-    private Set<FlightBooking> bookings;
+    @JoinColumn(name = "AIRLINECOMPANY_ID", referencedColumnName = "ID")
+    @ManyToOne(fetch = FetchType.EAGER)
+    private AirlineCompany airlineCompany;
+
+    @Override
+    public String toString() {
+        return "Flight{" + "number='" + flightNumber + '\'' +
+                ", route=" + route.toString() +
+                ", departureTime=" + departureDate +
+                ", arrivalTime=" + arrivalDate +
+                ", airlineCompany=" + airlineCompany.getName() +
+                '}';
+
+    }
 
 }

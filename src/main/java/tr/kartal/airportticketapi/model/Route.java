@@ -3,8 +3,8 @@ package tr.kartal.airportticketapi.model;
 import lombok.Data;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.Objects;
 
 @Entity
 @Table(name = "ROUTE")
@@ -12,26 +12,33 @@ import java.io.Serializable;
 public class Route implements Serializable {
 
     @Id
-    @NotNull
     @Column(name = "ID")
-    @SequenceGenerator(name = "route_id_seq", sequenceName = "route_id_seq", allocationSize = 1)
+    @SequenceGenerator(name = "route_id_seq", sequenceName = "route_id_seq",initialValue = 11, allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "route_id_seq")
-    @Basic(optional = false)
     private Integer id;
 
-    @JoinColumn(name = "FROM_AIRPORT_ID", referencedColumnName = "ID", insertable = false, updatable = false)
-    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "FROM_AIRPORT_ID", referencedColumnName = "ID")
+    @ManyToOne(fetch = FetchType.EAGER)
     private Airport from;
 
-    @Column(name = "FROM_AIRPORT_ID")
-    private Integer fromAirportId;
-
-    @JoinColumn(name = "TO_AIRPORT_ID", referencedColumnName = "ID", insertable = false, updatable = false)
-    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "TO_AIRPORT_ID", referencedColumnName = "ID")
+    @ManyToOne(fetch = FetchType.EAGER)
     private Airport to;
 
-    @Column(name = "TO_AIRPORT_ID")
-    private Integer toAirportId;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Route route = (Route) o;
+        return Objects.equals(from, route.from) &&
+                Objects.equals(to, route.to);
+    }
 
+    @Override
+    public String toString() {
+        return "(" + from +
+                "->" + to +
+                ')';
+    }
 
 }

@@ -12,10 +12,8 @@ import javax.validation.constraints.Size;
 public class AirlineCompany {
 
     @Id
-    @SequenceGenerator(name = "airlinecompany_id_seq", sequenceName = "airlinecompany_id_seq", allocationSize = 1)
+    @SequenceGenerator(name = "airlinecompany_id_seq", sequenceName = "airlinecompany_id_seq",initialValue = 11, allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "airlinecompany_id_seq")
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "ID")
     private Integer id;
 
@@ -24,4 +22,5 @@ public class AirlineCompany {
     @Size(min = 1, max = 255)
     @Column(name = "NAME")
     private String name;
+
 }
