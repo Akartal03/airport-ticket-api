@@ -34,6 +34,9 @@ public class Flight implements Serializable {
     @Column(name = "NUMBEROFSOLDTICKETS")
     private Integer numberOfSoldTickets = 0;
 
+    @Column(name = "PRICEINCREASERATIO")
+    private Integer priceIncreseRatio = 0;
+
     @JoinColumn(name = "ROUTE_ID", referencedColumnName = "ID")
     @ManyToOne(fetch = FetchType.EAGER)
     private Route route;
