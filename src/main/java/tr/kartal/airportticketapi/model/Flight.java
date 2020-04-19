@@ -22,9 +22,6 @@ public class Flight implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "flight_id_seq")
     private Integer id;
 
-    @Column(name = "FLIGHTNUMBER", unique = true)
-    private String flightNumber;
-
     @Column(name = "QUOTA")
     private Integer quota;
 
@@ -53,7 +50,7 @@ public class Flight implements Serializable {
 
     @Override
     public String toString() {
-        return "Flight{" + "number='" + flightNumber + '\'' +
+        return "Flight{" + "price='" + ticketPrice + '\'' +
                 ", route=" + route.toString() +
                 ", departureTime=" + departureDate +
                 ", arrivalTime=" + arrivalDate +

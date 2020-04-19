@@ -15,7 +15,7 @@ public class AirportticketapiApplication {
 
     @PostConstruct
     void init() {
-        TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
+        TimeZone.setDefault(TimeZone.getTimeZone("Europe/Istanbul"));
     }
 
 }

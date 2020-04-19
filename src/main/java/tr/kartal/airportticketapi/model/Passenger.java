@@ -3,6 +3,7 @@ package tr.kartal.airportticketapi.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import java.io.Serializable;
 
 @Entity
@@ -23,6 +24,7 @@ public class Passenger implements Serializable {
     private String lastName;
 
     @Column(name = "EMAIL")
+    @Email
     private String email;
 
 }

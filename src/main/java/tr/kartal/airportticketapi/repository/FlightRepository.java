@@ -12,15 +12,12 @@ import tr.kartal.airportticketapi.model.Flight;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 @Transactional
 public interface FlightRepository extends JpaRepository<Flight, Integer>, JpaSpecificationExecutor<Flight> {
 
     List<Flight> findByAirlineCompany(AirlineCompany company);
-
-    Optional<Flight> findFlightByFlightNumber(String flightNumber);
 
     @Modifying
     @Query("UPDATE Flight f SET f.numberOfSoldTickets = f.numberOfSoldTickets +1 WHERE f.id = :id")

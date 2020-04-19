@@ -30,13 +30,13 @@ public class FlightController {
         // şimdiki zamandan önce olan uçuşları engellemek için yazıldı.
         return flightRepository.findAll()
                 .stream()
-                .filter(x -> x.getArrivalDate().isAfter(LocalDateTime.now()))
+                .filter(x -> x.getDepartureDate().isAfter(LocalDateTime.now()))
                 .collect(Collectors.toList());
     }
 
     @RequestMapping(value = "flights/add", method = RequestMethod.POST)
     public void create(@RequestBody Flight flight) throws Exception {
-        if (flight.getArrivalDate().isAfter(LocalDateTime.now())) {
+        if (flight.getDepartureDate().isAfter(LocalDateTime.now())) {
             flightRepository.save(flight);
         }else{
             throw new Exception("ArrivalDate must be after now!!");
@@ -47,14 +47,14 @@ public class FlightController {
     List<Flight> getFlightsWithCompany(@RequestBody AirlineCompany company) {
         return flightRepository.findByAirlineCompany(company)
                 .stream()
-                .filter(x -> x.getArrivalDate().isAfter(LocalDateTime.now()))
+                .filter(x -> x.getDepartureDate().isAfter(LocalDateTime.now()))
                 .collect(Collectors.toList());
     }
 
     @RequestMapping(value = "flights/{id}", method = RequestMethod.GET)
     Flight get(@PathVariable Integer id) {
         return flightRepository.findById(id)
-                .filter(x -> x.getArrivalDate().isAfter(LocalDateTime.now()))
+                .filter(x -> x.getDepartureDate().isAfter(LocalDateTime.now()))
                 .orElseThrow(() -> new FlightNotFoundException(id));
     }
 
@@ -65,7 +65,7 @@ public class FlightController {
         Specification<Flight> spec = rootNode.accept(new CustomRsqlVisitor<>());
         return flightRepository.findAll(spec)
                 .stream()
-                .filter(x -> x.getArrivalDate().isAfter(LocalDateTime.now()))
+                .filter(x -> x.getDepartureDate().isAfter(LocalDateTime.now()))
                 .collect(Collectors.toList());
 
     }

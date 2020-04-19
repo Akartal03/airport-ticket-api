@@ -1,11 +1,9 @@
 package tr.kartal.airportticketapi.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import net.minidev.json.annotate.JsonIgnore;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Entity
@@ -24,21 +22,21 @@ public class Ticket implements Serializable {
     private Integer id;
 
     @Column(name = "TICKETNUMBER", unique = true)
-    @NotNull
-    private String ticketNumber;
+    @Getter(onMethod = @__(@JsonIgnore))
+    @Setter
+    private Integer ticketNumber;
 
     @JoinColumn(name = "PASSENGER_ID", referencedColumnName = "ID")
     @OneToOne
-    @NotNull
     private Passenger passenger;
 
     @JoinColumn(name = "FLIGHT_ID", referencedColumnName = "ID")
     @OneToOne
-    @NotNull
     private Flight flight;
 
+    @Getter(onMethod = @__(@JsonIgnore))
+    @Setter
     @JoinColumn(name = "ISCANCEL")
-    @NotNull
     private Boolean isCancel = false;
 
     @Override

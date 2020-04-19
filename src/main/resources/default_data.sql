@@ -29,9 +29,14 @@ insert into route(id, from_airport_id, to_airport_id) values(8,8,1);
 insert into route(id, from_airport_id, to_airport_id) values(9,10,2);
 
 //FLIGHTS
-insert into flight(id, flightnumber, quota, numberofsoldtickets, ticketprice, airlinecompany_id, route_id, departuredate, arrivaldate)values(1, '100100', 100, 0, 149.9, 1, 1, '2020-05-14 12:30', '2020-05-14 18:15');
-insert into flight(id, flightnumber, quota, numberofsoldtickets, ticketprice, airlinecompany_id, route_id, departuredate, arrivaldate)values(2, '100101', 120, 0, 109.9, 2, 9, '2020-05-14 12:30', '2020-05-14 18:15');
-insert into flight(id, flightnumber, quota, numberofsoldtickets,  ticketprice, airlinecompany_id, route_id, departuredate, arrivaldate)values(3, '100102', 80, 0, 129.9, 4, 4, '2020-05-14 12:30', '2020-05-14 18:15');
-insert into flight(id, flightnumber, quota, numberofsoldtickets,  ticketprice, airlinecompany_id, route_id, departuredate, arrivaldate)values(4, '100103', 120, 0, 89.9, 3, 5, '2020-05-14 12:30', '2020-05-14 18:15');
-insert into flight(id, flightnumber, quota, numberofsoldtickets,  ticketprice, airlinecompany_id, route_id, departuredate, arrivaldate)values(5, '100104', 100, 0, 99.9, 1, 6, '2020-05-14 12:30', '2020-05-14 18:15');
-insert into flight(id, flightnumber, quota, numberofsoldtickets,  ticketprice, airlinecompany_id, route_id, departuredate, arrivaldate)values(6, '100105', 110, 0, 159.9, 2, 8, '2020-04-14 12:30', '2020-04-14 18:15');
+insert into flight(id, quota, numberofsoldtickets, priceincreaseratio, ticketprice, airlinecompany_id, route_id, departuredate, arrivaldate)values(1, 20, 0,10, 10, 1, 1, '2020-05-14 12:30', '2020-05-14 18:15');
+insert into flight(id, quota, numberofsoldtickets, priceincreaseratio, ticketprice, airlinecompany_id, route_id, departuredate, arrivaldate)values(2, 120, 0,10, 109.9, 2, 9, '2020-05-14 12:30', '2020-05-14 18:15');
+insert into flight(id, quota, numberofsoldtickets, priceincreaseratio, ticketprice, airlinecompany_id, route_id, departuredate, arrivaldate)values(3, 80, 0,10, 129.9, 4, 4, '2020-05-14 12:30', '2020-05-14 18:15');
+insert into flight(id, quota, numberofsoldtickets, priceincreaseratio, ticketprice, airlinecompany_id, route_id, departuredate, arrivaldate)values(4, 120, 0,10, 89.9, 3, 5, '2020-05-14 12:30', '2020-05-14 18:15');
+insert into flight(id, quota, numberofsoldtickets, priceincreaseratio, ticketprice, airlinecompany_id, route_id, departuredate, arrivaldate)values(5, 100, 0,10, 99.9, 1, 6, '2020-05-14 12:30', '2020-05-14 18:15');
+insert into flight(id, quota, numberofsoldtickets, priceincreaseratio, ticketprice, airlinecompany_id, route_id, departuredate, arrivaldate)values(6, 110, 0,10, 159.9, 2, 8, '2020-04-14 12:30', '2020-04-14 18:15');
+
+//PASSENGERS
+
+insert into passenger(id, firstname, lastname, email) values (1, 'abdullah','kartal','akartal67@gmail.com');
+insert into passenger(id, firstname, lastname, email) values (2, 'beyza','kartal','b3kartal@gmail.com');

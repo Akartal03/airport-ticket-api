@@ -9,6 +9,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import tr.kartal.airportticketapi.model.Ticket;
 
+import java.util.Optional;
+
 @Repository
 @Transactional
 public interface TicketRepository extends JpaRepository<Ticket, Integer>, JpaSpecificationExecutor<Ticket> {
@@ -17,4 +19,8 @@ public interface TicketRepository extends JpaRepository<Ticket, Integer>, JpaSpe
     @Query("UPDATE Ticket t SET t.isCancel = true WHERE t.ticketNumber = :ticketNumber")
     int updateTicketStatu(
             @Param("ticketNumber") String ticketNumber);
+
+    @Query("SELECT max(a.id) FROM Ticket a ")
+    Optional<Integer> select();
+
 }

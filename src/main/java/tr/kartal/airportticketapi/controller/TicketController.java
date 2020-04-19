@@ -30,7 +30,7 @@ public class TicketController {
     public List<Ticket> list() {
         return ticketRepository.findAll()
                 .stream()
-                .filter(x -> !x.getIsCancel() && x.getFlight().getArrivalDate().isAfter(LocalDateTime.now()))
+                .filter(x -> !x.getIsCancel() && x.getFlight().getDepartureDate().isAfter(LocalDateTime.now()))
                 .collect(Collectors.toList());
     }
 
