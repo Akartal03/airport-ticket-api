@@ -28,6 +28,10 @@
 Adımları;
 
 - jar dosyası oluşturma : mvn clean install
+
+- # Postgresql
+  docker run --name postgres -e POSTGRES_PASSWORD=test1234 -p 5432:5432 -d postgres
+  
 - docker image oluşturma : docker build -t ticketapi-img-1 .
 - container başlatma : docker run --name ticketapi --net=host ticketapi-img-1
 
