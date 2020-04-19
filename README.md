@@ -23,14 +23,13 @@
 
 - Docker kullanılarak yükleme işlemi yapılabilir.
 
-#### Dockerize
-
-Adımları;
 
 - jar dosyası oluşturma : mvn clean install
 
-- # Postgresql
-  docker run --name postgres -e POSTGRES_PASSWORD=test1234 -p 5432:5432 -d postgres
+#### Postgresql
+-  docker run --name postgres -e POSTGRES_PASSWORD=test1234 -p 5432:5432 -d postgres
+
+#### Dockerize
   
 - docker image oluşturma : docker build -t ticketapi-img-1 .
 - container başlatma : docker run --name ticketapi --net=host ticketapi-img-1
