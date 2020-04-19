@@ -97,7 +97,7 @@ public class TicketService {
                         log.error("ticket cancel error!");
                         return;
                     }
-                    if (!updateFlight(flight.get().getId())) {
+                    if (updateFlight(flight.get().getId())) {
                         log.info("ticket canceled," + ticketNumber);
                     }
                 }
