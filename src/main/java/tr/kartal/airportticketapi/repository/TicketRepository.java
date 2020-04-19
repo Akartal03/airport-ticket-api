@@ -17,10 +17,16 @@ public interface TicketRepository extends JpaRepository<Ticket, Integer>, JpaSpe
 
     @Modifying
     @Query("UPDATE Ticket t SET t.isCancel = true WHERE t.ticketNumber = :ticketNumber")
-    int updateTicketStatu(
-            @Param("ticketNumber") String ticketNumber);
+    int updateTicketStatus(
+            @Param("ticketNumber") Integer ticketNumber);
 
     @Query("SELECT max(a.id) FROM Ticket a ")
     Optional<Integer> select();
+
+    @Query("SELECT t.flightId FROM Ticket t where t.ticketNumber= :ticketNumber")
+    Optional<Integer> selectFlightId(
+            @Param("ticketNumber") Integer ticketNumber);
+
+    Optional<Ticket> findByTicketNumber(Integer ticketNUmber);
 
 }

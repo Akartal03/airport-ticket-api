@@ -1,51 +1,73 @@
-## Airline E-Commerce website using Java Spring boot, MySql, AngularJs and thymeleaf
+## BİLETLEME UYGULAMASI
 
-- Created a website clone for an Ecommerce airline web application using Spring boot, Spring data JPA(ORM) and MySQL. Added features to search and book flights.
+- Havayolları biletleme sistemi için bir back-end servis uygulaması
 
-- Created an REST API to serve an an integration layer for flight checkin microservice. Created flight checkin microservice for passengers to check in.
+- Havayolu şirketi eklenebilir, aranabilir
 
-- Encoded passwords to prevent them from being stored in plain text and defined roles for different types of users to perform authentication and authrorization.
+- Rota şirketi eklenebilir, aranabilir
 
-- Added logging features and defined custom log rotation policies to log information to an external log file.
+- Havayolu şirketine uçuş tanımlanabilir, aranabilir
 
-- Added AngularJs to validate forms and for two way binding.
-
-
-
-
-
-
-#### Details
-- Created a web application where logged in users as well as search and book flights.
-- Added feature to register new users and implement login.
-- Used Spring Data JPA(hibernate) as an ORM to interact with the MYSQL database.
-- Designed front end templates using thymeleaf and styled them using Bootstrap and Css.
-- Used bower.js to install jquery and bootstrap dependencies.
-- Created Integration layer(REST API) for flight checkin microservice to check in passengers
-with reservations. 
+- Bilet satın alınabilir, bilet numarası ile arama yapılabilir ve bilet iptali
+  yapılabilir
+  
+- Herbir bilet satışında uçuş kontenjanının %10, %20, %30 ... kontenjanları
+ dolduğunda bilet fiyatı %10 artış gösterir
 
 
 
-#### Microservice for checking in passengers
-
-https://github.com/deepanshululla/flight-checkin
 
 
-#### Database Model
+#### Detaylar
+- Spring boot, Java 11, postgresql, maven, hibernate, jpa ve Restful Web Servic(JSON) teknolojileri kullanılmıştır.
 
-There are 6 tables
+- Docker kullanılarak yükleme işlemi yapılabilir.
+
+#### Dockerize
+
+Adımları;
+
+- jar dosyası oluşturma : mvn clean install
+- docker image oluşturma : docker build -t ticketapi-img-1 .
+- container başlatma : docker run --name ticketapi --net=host ticketapi-img-1
+
+#### Veritabanı Modeli
+
+6 tablodan oluşmaktadır.
 
 - FLIGHT
-- RESERVATION
-- USER
+- TICKET
 - PASSENGER
-- User_Role
-- Role
+- ROUTE
+- AIRPORT
+- AIRLINECOMPANY
 
-There is one to one mapping assumed between reservation and passenger as well as reservation
-and flight.
+#### Örnek İşlemler
 
-The role is used to classify different types of users for eg admin users and normal users.
+Listeleme işlemleri (GET)
 
-User_role table creates a many to many relationship between users and roles. This means
-we can assign multiple roles to a user and a user can be assigned multiple roles.
+- http://localhost:8080/api/v1/airportCompanies/
+- http://localhost:8080/api/v1/airports
+- http://localhost:8080/api/v1/flights
+- http://localhost:8080/api/v1/passengers
+- http://localhost:8080/api/v1/routes
+- http://localhost:8080/api/v1/tickets
+
+Veritabanına Tablo Ekleme İşlemleri (POST)
+
+ http://localhost:8080/api/v1/airportCompanies/add
+-   {
+        "name": "ONUR AIR"
+    }
+    
+ http://localhost:8080/api/v1/airports/add
+ - {
+     "iataCode": "BLC",
+     "name": "Bali Airport",
+     "countryIsoCode": "CM"
+    }
+    
+- http://localhost:8080/api/v1/flights/add
+- http://localhost:8080/api/v1/passengers/add
+- http://localhost:8080/api/v1/routes/add
+- http://localhost:8080/api/v1/tickets/add

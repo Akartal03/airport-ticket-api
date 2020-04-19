@@ -13,6 +13,7 @@ import tr.kartal.airportticketapi.repository.TicketRepository;
 import javax.annotation.PostConstruct;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -28,41 +29,44 @@ public class TicketService {
     @Autowired
     private FlightRepository flightRepository;
 
+    // unique ticket number creator
     @PostConstruct
-    void init(){
-        if(ticketRepository.select().isPresent()){
+    void init() {
+        if (ticketRepository.select().isPresent()) {
             ticketCounter = new AtomicInteger(ticketRepository.select().get());
         }
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void buyTicket(Ticket ticket) {
+    public Ticket buyTicket(Ticket ticket) {
         try {
-            Optional<Flight> flight = flightRepository.findById(ticket.getFlight().getId());
+            Optional<Flight> flight = flightRepository.findById(ticket.getFlightId());
             if (flight.isPresent()) {
                 if (flight.get().getQuota() > flight.get().getNumberOfSoldTickets()) {
                     ticket.setTicketNumber(ticketCounter.incrementAndGet());
                     ticketRepository.save(ticket);
-                    log.info("ticket saved,  :" + ticket.toString());
+                    log.info("ticket bought,  ticket number:" + ticket.getTicketNumber());
 
                     synchronized (flight.get()) {
                         if (flightRepository.updateNumberOfSoldTickets(flight.get().getId()) == -1) {
                             log.error("flight can not updated !!");
-                            return;
+                            return null;
                         }
                     }
                 } else {
                     log.info("flight is full, sorry !!");
-                    return;
+                    return null;
                 }
-
                 checkFlightOccupancyRate(flight.get());
             } else {
                 log.error("flight can not find !!");
+                return null;
             }
         } catch (Exception ex) {
             log.error("ticket save error," + ex.getMessage());
+            return null;
         }
+        return ticket;
     }
 
     // herbir bilet alındığında uçuş doluluk oranını kontrol eder ve gerektiğinde bilet fiyatında yüzde 10 artış sağlar.
@@ -79,4 +83,34 @@ public class TicketService {
             }
         }
     }
+
+    // bilet iptali durumunda satılan bilet sayısı 1 azalmalıdır.
+    public void cancelTicket(Integer ticketNumber) {
+        Optional<Integer> flightId = ticketRepository.selectFlightId(ticketNumber);
+
+        if (flightId.isPresent()) {
+            Optional<Flight> flight = flightRepository.findById(flightId.get());
+            if (flight.isPresent()) {
+                if (flight.get().getDepartureDate().isAfter(LocalDateTime.now())) {
+
+                    if (ticketRepository.updateTicketStatus(ticketNumber) == -1) {
+                        log.error("ticket cancel error!");
+                        return;
+                    }
+                    if (!updateFlight(flight.get().getId())) {
+                        log.info("ticket canceled," + ticketNumber);
+                    }
+                }
+            }
+        } else {
+            log.info("ticket could not find:" + ticketNumber);
+        }
+    }
+
+    private synchronized boolean updateFlight(Integer id) {
+        return flightRepository.updateFlightStatus(id) != -1;
+    }
 }
+
+
+

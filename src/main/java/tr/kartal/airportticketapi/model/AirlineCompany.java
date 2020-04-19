@@ -12,7 +12,7 @@ import javax.validation.constraints.Size;
 public class AirlineCompany {
 
     @Id
-    @SequenceGenerator(name = "airlinecompany_id_seq", sequenceName = "airlinecompany_id_seq",initialValue = 11, allocationSize = 1)
+    @SequenceGenerator(name = "airlinecompany_id_seq", sequenceName = "airlinecompany_id_seq",initialValue = 5, allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "airlinecompany_id_seq")
     @Column(name = "ID")
     private Integer id;

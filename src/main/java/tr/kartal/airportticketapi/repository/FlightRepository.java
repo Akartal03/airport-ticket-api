@@ -7,7 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import tr.kartal.airportticketapi.model.AirlineCompany;
 import tr.kartal.airportticketapi.model.Flight;
 
 import java.math.BigDecimal;
@@ -17,7 +16,7 @@ import java.util.List;
 @Transactional
 public interface FlightRepository extends JpaRepository<Flight, Integer>, JpaSpecificationExecutor<Flight> {
 
-    List<Flight> findByAirlineCompany(AirlineCompany company);
+    List<Flight> findByAirlineCompanyId(Integer companyId);
 
     @Modifying
     @Query("UPDATE Flight f SET f.numberOfSoldTickets = f.numberOfSoldTickets +1 WHERE f.id = :id")
@@ -29,5 +28,10 @@ public interface FlightRepository extends JpaRepository<Flight, Integer>, JpaSpe
     int updateTicketPrice(
             @Param("ticketPrice") BigDecimal price,
             @Param("priceIncreaseRatio") Integer priceIncreaseRatio,
+            @Param("id") Integer id);
+
+    @Modifying
+    @Query("UPDATE Flight f SET f.numberOfSoldTickets = f.numberOfSoldTickets-1 WHERE f.id = :id")
+    int updateFlightStatus(
             @Param("id") Integer id);
 }

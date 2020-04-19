@@ -1,7 +1,7 @@
 package tr.kartal.airportticketapi.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
-import net.minidev.json.annotate.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -22,21 +22,25 @@ public class Ticket implements Serializable {
     private Integer id;
 
     @Column(name = "TICKETNUMBER", unique = true)
-    @Getter(onMethod = @__(@JsonIgnore))
-    @Setter
     private Integer ticketNumber;
 
-    @JoinColumn(name = "PASSENGER_ID", referencedColumnName = "ID")
-    @OneToOne
+    @JsonIgnore
+    @JoinColumn(name = "PASSENGER_ID", referencedColumnName = "ID", insertable = false, updatable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
     private Passenger passenger;
 
-    @JoinColumn(name = "FLIGHT_ID", referencedColumnName = "ID")
-    @OneToOne
+    @Column(name = "PASSENGER_ID")
+    private Integer passengerId;
+
+    @JsonIgnore
+    @JoinColumn(name = "FLIGHT_ID", referencedColumnName = "ID", insertable = false, updatable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
     private Flight flight;
 
-    @Getter(onMethod = @__(@JsonIgnore))
-    @Setter
-    @JoinColumn(name = "ISCANCEL")
+    @Column(name = "FLIGHT_ID")
+    private Integer flightId;
+
+    @Column(name = "ISCANCEL")
     private Boolean isCancel = false;
 
     @Override

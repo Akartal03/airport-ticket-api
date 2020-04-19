@@ -1,5 +1,6 @@
 package tr.kartal.airportticketapi.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,7 +19,7 @@ public class Flight implements Serializable {
 
     @Id
     @Column(name = "ID")
-    @SequenceGenerator(name = "flight_id_seq", sequenceName = "flight_id_seq",initialValue = 11, allocationSize = 1)
+    @SequenceGenerator(name = "flight_id_seq", sequenceName = "flight_id_seq", initialValue = 11, allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "flight_id_seq")
     private Integer id;
 
@@ -28,15 +29,21 @@ public class Flight implements Serializable {
     @Column(name = "TICKETPRICE")
     private BigDecimal ticketPrice;
 
+    @JsonIgnore
     @Column(name = "NUMBEROFSOLDTICKETS")
     private Integer numberOfSoldTickets = 0;
 
+    @JsonIgnore
     @Column(name = "PRICEINCREASERATIO")
-    private Integer priceIncreseRatio = 0;
+    private Integer priceIncreseRatio = 10;
 
-    @JoinColumn(name = "ROUTE_ID", referencedColumnName = "ID")
-    @ManyToOne(fetch = FetchType.EAGER)
+    @JsonIgnore
+    @JoinColumn(name = "ROUTE_ID", referencedColumnName = "ID", insertable = false, updatable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
     private Route route;
+
+    @Column(name = "ROUTE_ID")
+    private Integer routeId;
 
     @Column(name = "DEPARTUREDATE")
     private LocalDateTime departureDate;
@@ -44,9 +51,13 @@ public class Flight implements Serializable {
     @Column(name = "ARRIVALDATE")
     private LocalDateTime arrivalDate;
 
-    @JoinColumn(name = "AIRLINECOMPANY_ID", referencedColumnName = "ID")
-    @ManyToOne(fetch = FetchType.EAGER)
+    @JsonIgnore
+    @JoinColumn(name = "AIRLINECOMPANY_ID", referencedColumnName = "ID", insertable = false, updatable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
     private AirlineCompany airlineCompany;
+
+    @Column(name = "AIRLINECOMPANY_ID")
+    private Integer airlineCompanyId;
 
     @Override
     public String toString() {
@@ -54,7 +65,7 @@ public class Flight implements Serializable {
                 ", route=" + route.toString() +
                 ", departureTime=" + departureDate +
                 ", arrivalTime=" + arrivalDate +
-                ", airlineCompany=" + airlineCompany.getName() +
+                ", airlineCompany=" + airlineCompany.toString() +
                 '}';
 
     }

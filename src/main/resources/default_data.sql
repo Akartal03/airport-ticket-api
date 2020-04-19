@@ -18,15 +18,15 @@ insert into airlinecompany(id, name) values (3,'AMERICAN AIRLINES');
 insert into airlinecompany(id, name) values (4,'ATLAS JET');
 
 //ROUTES
-insert into route(id, from_airport_id, to_airport_id) values(1,1,2);
-insert into route(id, from_airport_id, to_airport_id) values(2,1,4);
-insert into route(id, from_airport_id, to_airport_id) values(3,2,5);
-insert into route(id, from_airport_id, to_airport_id) values(4,3,4);
-insert into route(id, from_airport_id, to_airport_id) values(5,3,10);
-insert into route(id, from_airport_id, to_airport_id) values(6,9,8);
-insert into route(id, from_airport_id, to_airport_id) values(7,6,7);
-insert into route(id, from_airport_id, to_airport_id) values(8,8,1);
-insert into route(id, from_airport_id, to_airport_id) values(9,10,2);
+insert into route(id, from_id, to_id) values(1,1,2);
+insert into route(id, from_id, to_id) values(2,1,4);
+insert into route(id, from_id, to_id) values(3,2,5);
+insert into route(id, from_id, to_id) values(4,3,4);
+insert into route(id, from_id, to_id) values(5,3,10);
+insert into route(id, from_id, to_id) values(6,9,8);
+insert into route(id, from_id, to_id) values(7,6,7);
+insert into route(id, from_id, to_id) values(8,8,1);
+insert into route(id, from_id, to_id) values(9,10,2);
 
 //FLIGHTS
 insert into flight(id, quota, numberofsoldtickets, priceincreaseratio, ticketprice, airlinecompany_id, route_id, departuredate, arrivaldate)values(1, 20, 0,10, 10, 1, 1, '2020-05-14 12:30', '2020-05-14 18:15');

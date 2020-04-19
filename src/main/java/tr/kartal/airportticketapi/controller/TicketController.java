@@ -35,17 +35,13 @@ public class TicketController {
     }
 
     @RequestMapping(value = "tickets/buy", method = RequestMethod.POST)
-    public void buyTicket(@RequestBody Ticket ticket) {
-        ticketService.buyTicket(ticket);
+    public Ticket buyTicket(@RequestBody Ticket ticket) {
+        return ticketService.buyTicket(ticket);
     }
 
     @RequestMapping(value = "tickets/cancel/{ticketNumber}", method = RequestMethod.POST)
-    public void cancel(@PathVariable String ticketNumber) throws Exception {
-        if (ticketRepository.updateTicketStatu(ticketNumber) == -1) {
-            throw new Exception("ticket cancel error!");
-        } else {
-            log.info("ticket canceled:" + ticketNumber);
-        }
+    public void cancel(@PathVariable Integer ticketNumber) {
+        ticketService.cancelTicket(ticketNumber);
     }
 
     @RequestMapping(value = "ticket", method = RequestMethod.GET)

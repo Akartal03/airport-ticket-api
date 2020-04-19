@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.web.bind.annotation.*;
 import tr.kartal.airportticketapi.exceptions.FlightNotFoundException;
-import tr.kartal.airportticketapi.model.AirlineCompany;
 import tr.kartal.airportticketapi.model.Flight;
 import tr.kartal.airportticketapi.repository.FlightRepository;
 import tr.kartal.airportticketapi.repository.rsql.CustomRsqlVisitor;
@@ -38,14 +37,15 @@ public class FlightController {
     public void create(@RequestBody Flight flight) throws Exception {
         if (flight.getDepartureDate().isAfter(LocalDateTime.now())) {
             flightRepository.save(flight);
+            log.info("flight added, "+ flight.toString());
         }else{
             throw new Exception("ArrivalDate must be after now!!");
         }
     }
 
-    @RequestMapping(value = "flights/company", method = RequestMethod.GET)
-    List<Flight> getFlightsWithCompany(@RequestBody AirlineCompany company) {
-        return flightRepository.findByAirlineCompany(company)
+    @RequestMapping(value = "flights/companies/{airlineCompanyId}", method = RequestMethod.GET)
+    List<Flight> getFlightsWithCompany(@PathVariable Integer airlineCompanyId) {
+        return flightRepository.findByAirlineCompanyId(airlineCompanyId)
                 .stream()
                 .filter(x -> x.getDepartureDate().isAfter(LocalDateTime.now()))
                 .collect(Collectors.toList());
