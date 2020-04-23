@@ -3,15 +3,16 @@
 - Havayolları biletleme sistemi için bir back-end servis uygulaması
 
 - Havayolu şirketi eklenebilir, aranabilir
-- Rota eklenebilir, aranabilir
+- Havaalanı eklenebilir, aranabilir.
+- Rota eklenebilir, aranabilir.
 
-- Havayolu şirketine uçuş tanımlanabilir, aranabilir
+- Havayolu şirketine uçuş tanımlanabilir, aranabilir.
 
 - Bilet satın alınabilir, bilet numarası ile arama yapılabilir ve bilet iptali
-  yapılabilir
+  yapılabilir.
   
 - Herbir bilet satışında uçuş kontenjanının %10, %20, %30 ... kontenjanları
- dolduğunda bilet fiyatı %10 artış gösterir
+ dolduğunda bilet fiyatı %10 artış gösterir.
 
 
 
