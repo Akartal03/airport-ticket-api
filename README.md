@@ -3,8 +3,7 @@
 - Havayolları biletleme sistemi için bir back-end servis uygulaması
 
 - Havayolu şirketi eklenebilir, aranabilir
-
-- Rota şirketi eklenebilir, aranabilir
+- Rota eklenebilir, aranabilir
 
 - Havayolu şirketine uçuş tanımlanabilir, aranabilir
 
